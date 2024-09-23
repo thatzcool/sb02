@@ -1,37 +1,39 @@
 package com.ssg.sb02.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.List;
+
+
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardDTO {
+public class ReplyDTO {
 
+    private Long rno;
+
+    @NotNull
     private Long bno;
 
     @NotEmpty
-    @Size(min = 3, max = 100)
-    private String title;
+    private String replyText;
 
     @NotEmpty
-    private String content;
+    private String replyer;
 
-    @NotEmpty
-    private String writer;
-
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate;
 
+    @JsonIgnore
     private LocalDateTime modDate;
 
-    //첨부파일의 이름들
-    private List<String> fileNames;
 }

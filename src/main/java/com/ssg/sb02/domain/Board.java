@@ -1,34 +1,62 @@
 package com.ssg.sb02.domain;
 
+import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import jakarta.persistence.*;
-import lombok.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "imageSet")
 public class Board extends BaseEntity{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bno;
 
-      @Id
-      @GeneratedValue(strategy = GenerationType.IDENTITY)
-      //엔티티 객체를 위한 엔티티 클래스는 반드시 @Entity 를 적용해야 하고 @Id 를 필요로 한다.
-      //게시물은 데이터베이스에 추가될때마다 생성되는 번호를 이용하므로 키 생성전략(key generated strategy 로 데이터베이스에서 알아서 결정하는 방식, mysql의 autoincrement)
-      private  Long bno;
+    @Column(length = 500, nullable = false) //컬럼의 길이와 null허용여부
+    private String title;
 
-      @Column(length = 500, nullable = false)
-      private String title;
+    @Column(length = 2000, nullable = false)
+    private String content;
 
-      @Column(length = 1000, nullable = false)
-      private String content;
+    @Column(length = 50, nullable = false)
+    private String writer;
 
-      @Column(length = 50,nullable = false)
-      private String writer;
+    public void change(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
 
-      public void change(String title, String content){
-              this.title = title;
-              this.content = content;
-      }
+
+    @OneToMany(mappedBy = "board",
+            cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    @Builder.Default
+    @BatchSize(size = 20)
+    private Set<BoardImage> imageSet = new HashSet<>();
+
+    public void addImage(String uuid, String fileName){
+
+        BoardImage boardImage = BoardImage.builder()
+                .uuid(uuid)
+                .fileName(fileName)
+                .board(this)
+                .ord(imageSet.size())
+                .build();
+        imageSet.add(boardImage);
+    }
+
+    public void clearImages() {
+
+        imageSet.forEach(boardImage -> boardImage.changeBoard(null));
+
+        this.imageSet.clear();
+    }
+
 }

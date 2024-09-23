@@ -5,17 +5,20 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@Configuration   //스프링의 설정 클래스임을 명시
+@Configuration
+@EnableJpaAuditing
 public class RootConfig {
-    //ModelMapper 를 스프링의 빈으로 설정
+
     @Bean
-    public ModelMapper getMapper(){
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.getConfiguration().setFieldMatchingEnabled(true).setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
-                    .setMatchingStrategy(MatchingStrategies.STRICT);
+    public ModelMapper getMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+                .setFieldMatchingEnabled(true)
+                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
 
-            return modelMapper;
-
+        return modelMapper;
     }
 }

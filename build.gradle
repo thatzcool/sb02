@@ -102,7 +102,7 @@ dependencies {
             "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
 
 
-    implementation 'net.coobird:thumbnailator:0.4.16'
+
 
 }
 
