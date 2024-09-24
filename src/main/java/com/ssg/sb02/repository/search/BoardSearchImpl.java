@@ -3,8 +3,13 @@ package com.ssg.sb02.repository.search;
 
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import com.ssg.sb02.domain.Board;
+import com.ssg.sb02.domain.QBoard;
+import com.ssg.sb02.domain.QReply;
+import com.ssg.sb02.dto.BoardImageDTO;
 import com.ssg.sb02.dto.BoardListAllDTO;
 import com.ssg.sb02.dto.BoardListReplyCountDTO;
 import org.springframework.data.domain.Page;
