@@ -144,6 +144,7 @@
 <script layout:fragment="script" th:inline="javascript">
 
     const bno = [[${dto.bno}]]
+    console.log(get1(bno))
 
     const replyList = document.querySelector('.replyList') //댓글 목록 DOM
     const replyPaging = document.querySelector('.replyPaging') //페이지 목록 DOM

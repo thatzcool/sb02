@@ -20,7 +20,7 @@ public class Reply extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)   //board 엔티티와 다대일 연관관계
     private Board board;
 
     private String replyText;
