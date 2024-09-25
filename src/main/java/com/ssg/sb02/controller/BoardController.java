@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,7 +38,7 @@ public class BoardController {
     private final BoardService boardService;
 
 
-
+   // @PreAuthorize("hasRole('USER')")
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model){
 
@@ -52,6 +53,9 @@ public class BoardController {
     }
 
 
+
+
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/register")
     public void registerGET(){
 
@@ -79,7 +83,7 @@ public class BoardController {
 
 
 
-
+   // @PreAuthorize("isAuthenticated()")
     @GetMapping({"/read", "/modify"})
     public void read(Long bno, PageRequestDTO pageRequestDTO, Model model){
 
@@ -91,6 +95,7 @@ public class BoardController {
 
     }
 
+   // @PreAuthorize("principal.username == boardDTO.writer ")
     @PostMapping("/modify")
     public String modify( @Valid BoardDTO boardDTO,
                           BindingResult bindingResult,
@@ -121,7 +126,7 @@ public class BoardController {
     }
 
 
-
+    //@PreAuthorize("principal.username == boardDTO.writer ")
     @PostMapping("/remove")
     public String remove(BoardDTO boardDTO, RedirectAttributes redirectAttributes) {
 
